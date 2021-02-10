@@ -7,12 +7,7 @@ let room;
 const port=process.env.PORT||5000;
 
 
-app.use(cors());
-app.get('/',(req,res)=>{
 
-res.send("server is running")
-    
-})
 io.on('connection',socket=>{
 
 console.log("connected "+socket.id)
@@ -35,6 +30,13 @@ socket.join(data);
 })
 
 
+}
+)
+app.use(cors());
+app.get('/',(req,res)=>{
+
+res.send("server is running")
+    
 })
 http.listen(port,()=>{
 
