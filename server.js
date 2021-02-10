@@ -1,22 +1,18 @@
 const app=require('express')();
 const http=require('http').createServer(app);
-const io=require('socket.io')(http,{
-    handlePreflightRequest: (req, res) => {
-        const headers = {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": "https://elastic-hoover-cd7c79.netlify.app", //or the specific origin you want to give access to,
-            "Access-Control-Allow-Credentials": true
-        };
-        res.writeHead(200, headers);
-        res.end();
-    }
-})
+const io=require('socket.io')(http)
+const cors=require('cors')
 
 let room;
 const port=process.env.PORT||5000;
 
 
+app.use(cors());
+app.get('/',(req,res)=>{
 
+res.send("server is running")
+    
+})
 io.on('connection',socket=>{
 
 console.log("connected "+socket.id)
