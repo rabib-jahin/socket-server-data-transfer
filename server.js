@@ -13,7 +13,7 @@ io.on('connection',socket=>{
 console.log("connected "+socket.id)
 socket.on("canvas-data",data=>{
 
-socket.broadcast.emit("canvas-data",data.img);
+socket.to(data.room).broadcast.emit("canvas-data",data.img);
 
 
 })
