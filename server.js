@@ -3,7 +3,7 @@ const http=require('http').createServer(app);
 const io=require('socket.io')(http)
 const cors=require('cors')
 
-let room;
+var room=[];
 const port=process.env.PORT||5000;
 
 
@@ -23,13 +23,28 @@ console.log("server sent" +data.data)
 })
 socket.on('create',data=>{
     console.log(data+" joined")
-room=data;
+room.push(data);
 socket.join(data);
 
 
 })
 
+socket.on('join',data=>{
+if(room.includes(data)){
+socket.join(data);
+console.log(data+"joined now")
+socket.emit('success','')
+}
+else{
+    socket.emit('err','No room exists');
+}
 
+})
+
+socket.on('disconnect',()=>{
+console.log("disconnected");
+
+})
 }
 )
 app.use(cors());
